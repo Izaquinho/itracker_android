@@ -16,6 +16,7 @@ import com.github.kittinunf.fuel.httpPut
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
+import java.util.*
 
 class Maps : AppCompatActivity() {
 
@@ -31,9 +32,19 @@ class Maps : AppCompatActivity() {
 
         val ss = intent.getStringExtra("idDoMotorista").toString()
 
-        getCurrentLocation(ss)
+        taskTimer(ss)
+
     }
-    
+
+    fun taskTimer(a: String) {
+        Timer().scheduleAtFixedRate( object : TimerTask() {
+            override fun run() {
+                getCurrentLocation(a)
+            }
+        }, 0, 3000)
+    }
+
+
     private fun getCurrentLocation(a: String) {
         if(checkPermission()) {
 
@@ -53,8 +64,6 @@ class Maps : AppCompatActivity() {
 
                     } else {
 
-                        Toast.makeText(this,"Localização Obtida", Toast.LENGTH_SHORT).show()
-
                         val coordenadas = Coordenadas(location.latitude.toString() , location.longitude.toString(), a)
 
                         val (_, _, result) = "http://10.104.201.137:5002/update".httpPut()
@@ -64,6 +73,7 @@ class Maps : AppCompatActivity() {
                         println(result)
                     }
                 }
+
             } else {
                 Toast.makeText(this,"Ative sua Localização", Toast.LENGTH_SHORT).show()
                 val intent= Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
