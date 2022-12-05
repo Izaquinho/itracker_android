@@ -8,14 +8,16 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.github.kittinunf.fuel.core.extensions.jsonBody
+import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPut
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
+import org.json.JSONObject
 import java.util.*
 
 class Maps : AppCompatActivity() {
@@ -24,6 +26,8 @@ class Maps : AppCompatActivity() {
 
     data class Coordenadas(var latitude: String, var longitude: String , var id : String)
 
+    data class GetId(var coletas: String)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -31,6 +35,20 @@ class Maps : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         val ss = intent.getStringExtra("idDoMotorista").toString()
+
+        val id = GetId(ss)
+
+        val (_, _, result) = "http://192.168.1.15:5002/getColetas".httpGet()
+            .jsonBody(Gson().toJson(id).toString())
+            .responseString()
+
+        val array = Gson().toJson(result)
+        val valorJson = JSONObject(array)
+
+        val response = valorJson["value"]
+
+        val view = findViewById<TextView>(R.id.textViewResponse)
+        view.text = response.toString()
 
         taskTimer(ss)
 
@@ -66,7 +84,7 @@ class Maps : AppCompatActivity() {
 
                         val coordenadas = Coordenadas(location.latitude.toString() , location.longitude.toString(), a)
 
-                        val (_, _, result) = "http://10.104.201.137:5002/update".httpPut()
+                        val (_, _, result) = "http://192.168.1.15:5002/update".httpPut()
                             .jsonBody(Gson().toJson(coordenadas).toString())
                             .responseString()
 

@@ -12,7 +12,7 @@ import com.github.kittinunf.fuel.httpPost
 import com.google.gson.Gson
 import org.json.JSONObject
 
-class piMainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     data class User(var email: String, var senha: String)
 
@@ -25,13 +25,13 @@ class piMainActivity : AppCompatActivity() {
 
         val users = findViewById<EditText>(R.id.editTextUsername)
         val password = findViewById<EditText>(R.id.editTextPassword)
-        val buttonLogin = findViewById<Button>(R.id.loginButton)
+        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
 
         buttonLogin.setOnClickListener {
 
             val user = User(users.text.toString() , password.text.toString())
 
-            val ( _ , _ , result ) = "http://10.104.201.137:5002/login".httpPost()
+            val ( _ , _ , result ) = "http://192.168.1.15:5002/login".httpPost()
                 .jsonBody(Gson().toJson(user).toString())
                 .responseString()
 
