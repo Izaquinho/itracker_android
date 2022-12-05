@@ -47,19 +47,30 @@
                 android:textColorHint="@color/blue"
                 android:textColor="@color/black"
                 android:drawablePadding="8dp"/>
-            <EditText
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/blue"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/editTextPassword"
-                android:background="@drawable/custom_edittext"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Senha"
+                android:paddingTop="10dp"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:hint="Password"
                 android:singleLine="true"
-                android:textColorHint="@color/blue"
-                android:textColor="@color/black"
-                android:drawablePadding="8dp"/>
+                android:textColor="@color/blue"
+                />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
