@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Neste campo será exibido as ocorrências que você possui agendado"
-                android:textColor="@color/blue"
+                android:textColor="@color/blue2"
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textStyle="normal" />
@@ -40,9 +40,10 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
+                android:layout_gravity="center"
                 android:padding="10dp"
                 android:text=""
-                android:textColor="@color/blue"
+                android:textColor="@color/blue2"
                 android:textSize="18sp"
                 android:textStyle="normal" />
         </LinearLayout>
@@ -56,8 +57,9 @@
         android:layout_marginTop="200dp"
         android:layout_gravity="center"
         android:textColor="@color/white"
+        android:background="@color/blue2"
         android:text="Compartilhar"
         android:textSize="18sp"
-        app:cornerRadius = "20dp" />
+        app:cornerRadius="20dp" />
 
 </LinearLayout>

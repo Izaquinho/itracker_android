@@ -89,7 +89,7 @@ class Maps : AppCompatActivity() {
 
                         val coordenadas = Coordenadas(location.latitude.toString() , location.longitude.toString(), a)
 
-                        val (_, _, result) = "http://192.168.1.15:5002/update".httpPut()
+                        val (_, _, result) = "http://192.168.1.15:5002/updateandroid".httpPut()
                             .jsonBody(Gson().toJson(coordenadas).toString())
                             .responseString()
 
