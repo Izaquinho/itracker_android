@@ -41,6 +41,7 @@ class Maps : AppCompatActivity() {
 
         btnCompartilhar.setOnClickListener {
 
+            Toast.makeText(this, "Compartilhando", Toast.LENGTH_SHORT).show()
             TimerLocation(ss)
         }
 
