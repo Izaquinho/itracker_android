@@ -8,6 +8,7 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -26,7 +27,7 @@ class Maps : AppCompatActivity() {
 
     data class Coordenadas(var latitude: String, var longitude: String , var id : String)
 
-    data class GetId(var coletas: String)
+    data class GetId(var idColeta: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,13 @@ class Maps : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         val ss = intent.getStringExtra("idDoMotorista").toString()
+
+        val btnCompartilhar = findViewById<Button>(R.id.btnCompartilhar)
+
+        btnCompartilhar.setOnClickListener {
+
+            TimerLocation(ss)
+        }
 
         val id = GetId(ss)
 
@@ -50,20 +58,17 @@ class Maps : AppCompatActivity() {
         val view = findViewById<TextView>(R.id.textViewResponse)
         view.text = response.toString()
 
-        taskTimer(ss)
-
     }
 
-    fun taskTimer(a: String) {
+    fun TimerLocation(a: String) {
         Timer().scheduleAtFixedRate( object : TimerTask() {
             override fun run() {
-                getCurrentLocation(a)
+                GetCurrentLocation(a)
             }
         }, 0, 3000)
     }
 
-
-    private fun getCurrentLocation(a: String) {
+    private fun GetCurrentLocation(a: String) {
         if(checkPermission()) {
 
             if(isLocationEnabled()) {
@@ -142,8 +147,8 @@ class Maps : AppCompatActivity() {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 Toast.makeText(applicationContext,"Acesso permitido", Toast.LENGTH_SHORT).show()
-                val bb = intent.getStringExtra("idDoMotorista").toString()
-                getCurrentLocation(bb)
+                val responseId = intent.getStringExtra("idDoMotorista").toString()
+                GetCurrentLocation(responseId)
 
             } else {
 
