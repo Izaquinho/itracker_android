@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
             val user = User(users.text.toString() , password.text.toString())
 
-            val ( _ , _ , result ) = "http://192.168.1.15:5002/login".httpPost()
+            val ( _ , _ , result ) = "http://192.168.1.15:5002/loginAndroid".httpPost()
                 .jsonBody(Gson().toJson(user).toString())
                 .responseString()
 
